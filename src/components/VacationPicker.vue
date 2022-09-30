@@ -89,6 +89,10 @@ import mixins from '../mixins/mixins';
             selectCountry(index) {
                 this.selectedCountryIndex = index;
             },
+            addCountry() {
+                this.newCountries.push(this.country);
+                this.newCountry = '';
+            }
         },  
         computed: {
             selectedCountry() {
@@ -115,10 +119,10 @@ import mixins from '../mixins/mixins';
 </script>
 
 <style scoped>
+/*
 .badge-danger {
 background-color: red;
-
 border-radius: 45%;
 }
-
+*/
 </style>
