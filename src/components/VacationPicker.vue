@@ -41,7 +41,7 @@
                 <ul class="list-group">
                     <li class="list-group-item" v-for="(country, index) in newCountries" :key="index">
                         <br>
-                         <h3> {{ newCountry }} </h3>
+                         <h3> {{ country }} </h3>
                     </li>
                 </ul>
         </ul>
@@ -89,8 +89,8 @@ import mixins from '../mixins/mixins';
             selectCountry(index) {
                 this.selectedCountryIndex = index;
             },
-            addCountry() {
-                this.newCountries.push(this.country);
+            addCountry(country) {
+                this.newCountries.push(country);
                 this.newCountry = '';
             }
         },  
@@ -113,7 +113,6 @@ import mixins from '../mixins/mixins';
             isExpensive() {
                 return countryData.countries[this.selectedCountryIndex].cost > 4000;
             },
-
         }
     }
 </script>
