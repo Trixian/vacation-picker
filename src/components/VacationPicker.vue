@@ -12,10 +12,27 @@
                             <span :id="country.id" 
                                 :title="country.details">
                                 {{ country.id }} - 
-                                {{country.name}} 
+                                {{country.name.toUpperCase()}} 
                             </span>
                         </li>  
             </ul>
+            <h2> Cheaper Destinations: </h2>
+            <select class="form-control-lg"
+            v-model="selectedCost"
+            @change="filterCountries()">
+                <option v-for="(cost, index) in costs"
+                    :key="index" 
+                    :value="cost">
+                        {{ cost }}
+                </option>
+            </select>
+            <ul class="list-group">
+                <li v-for="(country, index) in filteredCountries"
+                :key="index" class="list-group-item">
+                {{ country.name }} (EUR: {{country.cost}})
+                </li>
+            </ul>
+           
             </div></div>
         <div class="col-6">
         <h2> {{ textItem }}</h2>
@@ -24,8 +41,8 @@
                 <li class="list-group-item" >{{ selectedCountry.name }}</li>
                 <li class="list-group-item" >{{ selectedCountry.capital }}</li>
                      <li class='list-group-item' v-if="isExpensive"> 
-                    <span class="badge badge-danger badge-pill"> Expensive!</span>
-                </li>
+                    <span class="badge bg-danger badge-pill"> Expensive!</span>
+                    </li>
                 <li class="list-group-item" >{{ selectedCountry.details }}</li>
                 <li class="list-group-item" >
                     <img :src="getImgUrl(selectedCountry.img)" 
@@ -57,12 +74,14 @@
 //import { computed } from '@vue/runtime-core';
 import countryData from '../data/CountryData';
 import mixins from '../mixins/mixins';
+
     export default {
         created() {
             console.log('Component VacationPicker created');
         },
+      
         name: 'VacationPicker',
-        mixins: [mixins],
+        mixins: [mixins], 
         data() {
             return {
             countryData,
@@ -72,8 +91,11 @@ import mixins from '../mixins/mixins';
             alertMessage: "You clicked on ",
             selectedCountryIndex: 0,   
             newCountry: '',
-            newCountries: []  
-               
+            newCountries: [],  
+            selectedCost: 1000,
+            costs: [1000, 2000, 3000, 4000, 5000, 6000],
+            filteredCountries: [],
+
             } 
         }, 
         methods: {
@@ -92,6 +114,11 @@ import mixins from '../mixins/mixins';
             addCountry(country) {
                 this.newCountries.push(country);
                 this.newCountry = '';
+            },
+            filterCountries() {
+                console.log('Filtered cost:::', this.selectedCost);
+                this.filteredCountries = this.countryData.countries
+                .filter(country => country.cost < this.selectedCost);
             }
         },  
         computed: {
@@ -118,10 +145,5 @@ import mixins from '../mixins/mixins';
 </script>
 
 <style scoped>
-/*
-.badge-danger {
-background-color: red;
-border-radius: 45%;
-}
-*/
+
 </style>

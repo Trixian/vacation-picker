@@ -6,6 +6,6 @@ methods: {
         console.log(img);
         return require('../assets/countries/' + img);
         }
-}
+ }
 
 }
