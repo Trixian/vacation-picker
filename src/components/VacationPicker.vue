@@ -40,9 +40,13 @@
                 <li class="list-group-item" >{{ selectedCountry.id }}</li>
                 <li class="list-group-item" >{{ selectedCountry.name }}</li>
                 <li class="list-group-item" >{{ selectedCountry.capital }}</li>
-                     <li class='list-group-item' v-if="isExpensive"> 
+                     <li class='list-group-item' v-show="isExpensive"> 
                     <span class="badge bg-danger badge-pill"> Expensive!</span>
+                      </li>
+                    <li class='list-group-item' v-show="onSale"> 
+                    <span class="badge bg-success badge-pill">On sale!</span>
                     </li>
+                 
                 <li class="list-group-item" >{{ selectedCountry.details }}</li>
                 <li class="list-group-item" >
                     <img :src="getImgUrl(selectedCountry.img)" 
@@ -63,10 +67,6 @@
                 </ul>
         </ul>
         </div>            
-        <br>
-        <h3> Counter: {{ counter }}</h3>
-        <button @click="increment()" class="btn btn-success">+</button>
-        <button @click="decrement()" class="btn btn-danger">-</button>
     </div>
 </template>
 
@@ -99,12 +99,6 @@ import mixins from '../mixins/mixins';
             } 
         }, 
         methods: {
-            increment() {
-            this.counter++;
-            },
-            decrement() {
-            this.counter--;
-            },
             countryAlert(country) {
             alert(this.alertMessage + country.name);
             },
@@ -139,6 +133,9 @@ import mixins from '../mixins/mixins';
             },
             isExpensive() {
                 return countryData.countries[this.selectedCountryIndex].cost > 4000;
+            },
+            onSale() {
+                return countryData.countries[this.selectedCountryIndex].cost < 1000;
             },
         }
     }
